@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "@three-ws/notifications-mcp"
+abstract: "Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key."
+version: 0.1.4
+license: Apache-2.0
+repository-code: "https://github.com/nirholas/push-notifications-mcp"
+url: "https://three.ws"
+authors:
+  - name: three.ws
+    website: "https://three.ws"

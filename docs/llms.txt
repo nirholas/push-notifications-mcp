@@ -1,0 +1,20 @@
+# @three-ws/notifications-mcp
+
+> Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.
+
+@three-ws/notifications-mcp is a Model Context Protocol server from three.ws. Install: `npx -y @three-ws/notifications-mcp`.
+
+## Docs
+
+- [README](https://github.com/nirholas/push-notifications-mcp/blob/main/README.md): install, configuration, full reference
+- [Documentation site](https://nirholas.github.io/push-notifications-mcp/): the README as a web page
+- [Full text for LLMs](https://nirholas.github.io/push-notifications-mcp/llms-full.txt): README inlined
+- [AGENTS.md](https://github.com/nirholas/push-notifications-mcp/blob/main/AGENTS.md): guidance for coding agents
+
+## Project
+
+- [Source](https://github.com/nirholas/push-notifications-mcp)
+- [npm](https://www.npmjs.com/package/@three-ws/notifications-mcp)
+- [three.ws](https://three.ws): the platform this is part of
+- [Issues](https://github.com/nirholas/push-notifications-mcp/issues)
+- [MCP Registry](https://registry.modelcontextprotocol.io/?q=io.github.nirholas%2Fnotifications-mcp)

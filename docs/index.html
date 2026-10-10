@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/notifications-mcp: Read and manage your three.ws notification inbox from any AI agent</title>
+<meta name="description" content="Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.">
+<link rel="canonical" href="https://nirholas.github.io/push-notifications-mcp/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/notifications-mcp">
+<meta property="og:description" content="Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.">
+<meta property="og:url" content="https://nirholas.github.io/push-notifications-mcp/">
+<meta property="og:image" content="https://nirholas.github.io/push-notifications-mcp/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/notifications-mcp">
+<meta name="twitter:description" content="Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.">
+<meta name="twitter:image" content="https://nirholas.github.io/push-notifications-mcp/og.png">
+<meta name="keywords" content="mcp, three.ws, notifications, inbox, web-push, preferences, alerts, model-context-protocol, mcp-server, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/notifications-mcp","description":"Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.","codeRepository":"https://github.com/nirholas/push-notifications-mcp","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.4","url":"https://nirholas.github.io/push-notifications-mcp/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"mcp, three.ws, notifications, inbox, web-push, preferences, alerts, model-context-protocol, mcp-server, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/push-notifications-mcp/">@three-ws/notifications-mcp</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/push-notifications-mcp">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/notifications-mcp">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/notifications-mcp</h1>
+<p>Read and manage your three.ws notification inbox from any AI agent — list inbound events (pump/market alerts, sales, purchases, social, IRL, account), mark read, tune the per-category delivery matrix, and register Web Push devices. Account-scoped over the live API via a Bearer API key.</p>
+<div class="install" role="group" aria-label="Install command"><code>npx -y @three-ws/notifications-mcp</code><button type="button" data-copy="npx -y @three-ws/notifications-mcp">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/push-notifications-mcp">View on GitHub</a><a href="https://github.com/nirholas/push-notifications-mcp/stargazers">Star the repo</a><a href="https://registry.modelcontextprotocol.io/?q=io.github.nirholas%2Fnotifications-mcp">MCP Registry</a></div>
+</section>
+<div class="layout">
+<main id="content"><p align="center"><strong>Your three.ws notification inbox, delivery preferences, and Web Push devices — from any AI agent.</strong></p><p align="center">
+  <a href="https://www.npmjs.com/package/@three-ws/notifications-mcp"><img alt="npm" src="https://img.shields.io/npm/v/@three-ws/notifications-mcp?logo=npm&color=cb3837"></a>
+  <a href="https://www.npmjs.com/package/@three-ws/notifications-mcp"><img alt="downloads" src="https://img.shields.io/npm/dm/@three-ws/notifications-mcp?color=cb3837"></a>
+  <img alt="license" src="https://img.shields.io/npm/l/@three-ws/notifications-mcp?color=3b82f6">
+  <img alt="node" src="https://img.shields.io/node/v/@three-ws/notifications-mcp?color=339933&logo=node.js">
+  <a href="https://registry.modelcontextprotocol.io/?q=io.github.nirholas"><img alt="MCP Registry" src="https://img.shields.io/badge/MCP%20Registry-io.github.nirholas-0ea5e9"></a>
+  <a href="https://three.ws"><img alt="three.ws" src="https://img.shields.io/badge/built%20by-three.ws-000"></a>
+</p><p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#tools">Tools</a> ·
+  <a href="#authentication">Authentication</a> ·
+  <a href="#errors">Errors</a> ·
+  <a href="https://three.ws">three.ws</a>
+</p><hr>
+<blockquote>
+<p>A <a href="https://modelcontextprotocol.io">Model Context Protocol</a> server that gives an AI assistant its own three.ws <strong>notification inbox + delivery control</strong> over stdio. Read inbound events (pump/market alerts, sales &amp; earnings, purchase receipts, social mentions, IRL interactions, account/security notices), mark them read, tune the per-category → per-channel delivery matrix, and register Web Push devices — all live, all account-scoped.</p>
+</blockquote>
+<h2 id="why"><a class="anchor" href="#why" aria-label="Link to this section">#</a>Why</h2>
+<p>An agent that trades, sells skills, or stands in the real world generates inbound events around the clock — a coin it launched pumps, a skill it published sells, someone taps its IRL pin. Without an inbox surface, the agent polls a dozen endpoints or misses everything. This server turns the platform&#39;s own notification feed into seven MCP tools: the agent reads what happened since it last looked, triages it, and controls exactly which channels (<code>in_app</code>, <code>push</code>, <code>email</code>, <code>telegram</code>) each category of event uses to reach its owner.</p>
+<p>Every read and write hits the real three.ws API. The server is <strong>authenticated</strong>: it carries a three.ws API key (or OAuth access token) as a <code>Bearer</code> credential and resolves the owning account on every call. It signs nothing locally and holds no other secret.</p>
+<h2 id="install"><a class="anchor" href="#install" aria-label="Link to this section">#</a>Install</h2>
+<pre><code class="language-bash">npm install @three-ws/notifications-mcp
+</code></pre>
+<p>Or run with <code>npx</code> (no install):</p>
+<pre><code class="language-bash">THREE_WS_API_KEY=sk_live_… npx @three-ws/notifications-mcp
+</code></pre>
+<p>Node 20+. Two runtime dependencies (<code>@modelcontextprotocol/sdk</code>, <code>zod</code>).</p>
+<h2 id="quick-start"><a class="anchor" href="#quick-start" aria-label="Link to this section">#</a>Quick start</h2>
+<p><strong>Claude Code</strong>, one line:</p>
+<pre><code class="language-bash">claude mcp add notifications -e THREE_WS_API_KEY=sk_live_… -- npx -y @three-ws/notifications-mcp
+</code></pre>
+<p><strong>Claude Desktop / Cursor / any MCP client</strong> — add to your MCP config (<code>claude_desktop_config.json</code>, <code>.cursor/mcp.json</code>, <code>.mcp.json</code>):</p>
+<pre><code class="language-json">{
+	&quot;mcpServers&quot;: {
+		&quot;notifications&quot;: {
+			&quot;command&quot;: &quot;npx&quot;,
+			&quot;args&quot;: [&quot;-y&quot;, &quot;@three-ws/notifications-mcp&quot;],
+			&quot;env&quot;: { &quot;THREE_WS_API_KEY&quot;: &quot;sk_live_…&quot; }
+		}
+	}
+}
+</code></pre>
+<p>Restart the client and the seven tools appear. Inspect the surface in a GUI:</p>
+<pre><code class="language-bash">npx -y @modelcontextprotocol/inspector npx -y @three-ws/notifications-mcp
+</code></pre>
+<p>Then ask in plain language:</p>
+<blockquote>
+<p>Anything new in my inbox? Mark the pump alerts read, and turn off email for social mentions.</p>
+</blockquote>
+<p>Runs <code>list_notifications</code> → <code>mark_read</code> → <code>set_preferences</code>.</p>
+<h2 id="tools"><a class="anchor" href="#tools" aria-label="Link to this section">#</a>Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Kind</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#list_notifications"><code>list_notifications</code></a></td>
+<td>read</td>
+<td>The inbox, newest first, filterable by <code>type</code>, with an <code>unread_count</code>.</td>
+</tr>
+<tr>
+<td><a href="#mark_read"><code>mark_read</code></a></td>
+<td>write</td>
+<td>Mark one notification — or every unread one — read. Idempotent.</td>
+</tr>
+<tr>
+<td><a href="#delete_notification"><code>delete_notification</code></a></td>
+<td>write ⚠️</td>
+<td>Permanently remove one notification (irreversible).</td>
+</tr>
+<tr>
+<td><a href="#get_preferences"><code>get_preferences</code></a></td>
+<td>read</td>
+<td>The per-category → per-channel delivery matrix.</td>
+</tr>
+<tr>
+<td><a href="#set_preferences"><code>set_preferences</code></a></td>
+<td>write</td>
+<td>Patch which channels deliver each category. Idempotent.</td>
+</tr>
+<tr>
+<td><a href="#register_push_device"><code>register_push_device</code></a></td>
+<td>write</td>
+<td>Register a Web Push device from a browser <code>PushSubscription</code>. Idempotent.</td>
+</tr>
+<tr>
+<td><a href="#unregister_push_device"><code>unregister_push_device</code></a></td>
+<td>write ⚠️</td>
+<td>Remove a Web Push device (tears down delivery to it). Idempotent.</td>
+</tr>
+</tbody></table>
+<p>Every tool ships <a href="https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool-annotations">MCP tool annotations</a>: the two reads advertise <code>readOnlyHint: true</code>, and the two ⚠️ tools are flagged <code>destructiveHint: true</code>, so annotation-aware clients prompt before running them.</p>
+<h3 id="listnotifications"><a class="anchor" href="#listnotifications" aria-label="Link to this section">#</a><code>list_notifications</code></h3>
+<p>Read the account&#39;s inbox — the inbound-event feed the platform delivers: market/pump alerts, sales &amp; earnings, purchase receipts, social mentions, IRL interactions, and account/security notices. Wraps <code>GET /api/notifications</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td>no</td>
+<td>Return only one notification type (e.g. <code>&quot;pump_alert&quot;</code>, <code>&quot;skill_purchased&quot;</code>, <code>&quot;referral_earned&quot;</code>, <code>&quot;security_alert&quot;</code>). Lower_snake_case, ≤ 40 chars. Omit for all types.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td><code>number</code></td>
+<td>no</td>
+<td>How many to return, newest first. 1–50, default 20.</td>
+</tr>
+</tbody></table>
+<p>Example call and response (shape illustration — your inbox contents will differ):</p>
+<pre><code class="language-jsonc">// call
+{ &quot;type&quot;: &quot;pump_alert&quot;, &quot;limit&quot;: 2 }
+
+// response (example)
+{
+  &quot;ok&quot;: true,
+  &quot;type&quot;: &quot;pump_alert&quot;,
+  &quot;unread_count&quot;: 5,
+  &quot;count&quot;: 2,
+  &quot;notifications&quot;: [
+    {
+      &quot;id&quot;: &quot;5d1c2f0a-9b1e-4c3d-8e7f-000000000001&quot;,
+      &quot;type&quot;: &quot;pump_alert&quot;,
+      &quot;payload&quot;: { &quot;mint&quot;: &quot;FeMbDoX7R1Psc4GEcvJdsbNbZA3bfztcyDCatJVJpump&quot;, &quot;symbol&quot;: &quot;THREE&quot; },
+      &quot;read&quot;: false,
+      &quot;read_at&quot;: null,
+      &quot;created_at&quot;: &quot;2026-07-11T18:04:12.000Z&quot;
+    }
+  ]
+}
+</code></pre>
+<p><code>read</code> is derived from <code>read_at</code> (<code>null</code> ⇒ unread). <code>unread_count</code> is the total unread across the whole inbox, not just this page.</p>
+<h3 id="markread"><a class="anchor" href="#markread" aria-label="Link to this section">#</a><code>mark_read</code></h3>
+<p>Mark notifications read. Wraps <code>POST /api/notifications/:id/read</code> (one) and <code>POST /api/notifications/read-all</code> (all). Pass <strong>exactly one</strong> of the two arguments. Marking read only sets <code>read_at</code> — nothing is deleted, and re-running is a no-op.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>id</code></td>
+<td><code>string</code> (UUID)</td>
+<td>one of</td>
+<td>A single notification to mark read (from <code>list_notifications</code>).</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td><code>boolean</code></td>
+<td>one of</td>
+<td><code>true</code> ⇒ mark every unread notification read.</td>
+</tr>
+</tbody></table>
+<pre><code class="language-jsonc">// call
+{ &quot;all&quot;: true }
+
+// response (example)
+{ &quot;ok&quot;: true, &quot;scope&quot;: &quot;all&quot;, &quot;marked_read&quot;: 5 }
+</code></pre>
+<p>With <code>id</code>, the response is <code>{ &quot;ok&quot;: true, &quot;scope&quot;: &quot;one&quot;, &quot;id&quot;: &quot;…&quot;, &quot;read_at&quot;: &quot;…&quot; }</code>.</p>
+<h3 id="deletenotification"><a class="anchor" href="#deletenotification" aria-label="Link to this section">#</a><code>delete_notification</code></h3>
+<p>Permanently remove one notification. Wraps <code>DELETE /api/notifications/:id</code>. Irreversible — prefer <code>mark_read</code> for normal triage. Only a notification the caller owns can be deleted; a missing or already-deleted <code>id</code> returns a not-found error.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>id</code></td>
+<td><code>string</code> (UUID)</td>
+<td><strong>yes</strong></td>
+<td>The notification to delete (from <code>list_notifications</code>).</td>
+</tr>
+</tbody></table>
+<pre><code class="language-jsonc">// call
+{ &quot;id&quot;: &quot;5d1c2f0a-9b1e-4c3d-8e7f-000000000001&quot; }
+
+// response (example)
+{ &quot;ok&quot;: true, &quot;id&quot;: &quot;5d1c2f0a-9b1e-4c3d-8e7f-000000000001&quot;, &quot;deleted&quot;: true }
+</code></pre>
+<h3 id="getpreferences"><a class="anchor" href="#getpreferences" aria-label="Link to this section">#</a><code>get_preferences</code></h3>
+<p>Read the resolved delivery matrix — for each category, which channels deliver it. No arguments. Wraps <code>GET /api/notifications/preferences</code>. Read this before <code>set_preferences</code> so you patch from real current state.</p>
+<pre><code class="language-jsonc">// response (example)
+{
+  &quot;ok&quot;: true,
+  &quot;categories&quot;: [
+    { &quot;key&quot;: &quot;sales&quot;, &quot;label&quot;: &quot;Sales &amp; earnings&quot;, &quot;description&quot;: &quot;…&quot; },
+    { &quot;key&quot;: &quot;alerts&quot;, &quot;label&quot;: &quot;Market &amp; pump alerts&quot;, &quot;description&quot;: &quot;…&quot; }
+    /* purchases, social, irl, account … */
+  ],
+  &quot;channels&quot;: [&quot;in_app&quot;, &quot;push&quot;, &quot;email&quot;, &quot;telegram&quot;],
+  &quot;prefs&quot;: {
+    &quot;categories&quot;: { &quot;alerts&quot;: { &quot;in_app&quot;: true, &quot;push&quot;: true, &quot;email&quot;: false, &quot;telegram&quot;: false } },
+    &quot;telegram_chat_id&quot;: null
+  },
+  &quot;push&quot;: { &quot;subscribed_devices&quot;: 1 }
+}
+</code></pre>
+<p>The seven categories are <code>sales</code>, <code>purchases</code>, <code>social</code>, <code>irl</code>, <code>alerts</code>, <code>creations</code>, <code>account</code>; the four channels are <code>in_app</code>, <code>push</code>, <code>email</code>, <code>telegram</code>. <code>prefs.categories</code> is the effective matrix with the user&#39;s sparse overrides already merged onto platform defaults. A category may also carry <code>lockedChannels</code>: <code>account</code> locks <code>in_app</code> on, so security and withdrawal notices always reach the bell inbox.</p>
+<h3 id="setpreferences"><a class="anchor" href="#setpreferences" aria-label="Link to this section">#</a><code>set_preferences</code></h3>
+<p>Patch the delivery matrix. Wraps <code>PUT /api/notifications/preferences</code>. Provide at least one of the two arguments. Only the category/channel pairs you pass change; unknown keys are dropped server-side; untouched pairs keep their current value. Re-applying the same values is a no-op.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>categories</code></td>
+<td><code>object</code></td>
+<td>at least one</td>
+<td>Outer keys: <code>sales</code>, <code>purchases</code>, <code>social</code>, <code>irl</code>, <code>alerts</code>, <code>creations</code>, <code>account</code>. Inner keys: <code>in_app</code>, <code>push</code>, <code>email</code>, <code>telegram</code> → boolean. <code>account</code>&#39;s <code>in_app</code> is locked on and a <code>false</code> for it is ignored.</td>
+</tr>
+<tr>
+<td><code>telegram_chat_id</code></td>
+<td><code>string</code></td>
+<td>at least one</td>
+<td>Numeric Telegram chat id to deliver the <code>telegram</code> channel to, or <code>&quot;&quot;</code> to unlink. ≤ 24 chars.</td>
+</tr>
+</tbody></table>
+<pre><code class="language-jsonc">// call — stop emailing social mentions, push pump alerts
+{ &quot;categories&quot;: { &quot;social&quot;: { &quot;email&quot;: false }, &quot;alerts&quot;: { &quot;push&quot;: true } } }
+
+// response (example) — the full resolved matrix after the update
+{ &quot;ok&quot;: true, &quot;prefs&quot;: { &quot;categories&quot;: { &quot;social&quot;: { &quot;email&quot;: false /* … */ } }, &quot;telegram_chat_id&quot;: null } }
+</code></pre>
+<h3 id="registerpushdevice"><a class="anchor" href="#registerpushdevice" aria-label="Link to this section">#</a><code>register_push_device</code></h3>
+<p>Register a Web Push device so the account receives push notifications on it. Wraps <code>POST /api/push/subscribe</code>. The <code>subscription</code> argument is <strong>exactly</strong> what the browser&#39;s <code>pushManager.subscribe().toJSON()</code> returns. Push endpoints are globally unique — re-registering the same device upserts (latest owner wins), so this is idempotent. Whether a category actually delivers over push is still governed by <code>set_preferences</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>subscription</code></td>
+<td><code>object</code></td>
+<td><strong>yes</strong></td>
+<td><code>{ endpoint, keys: { p256dh, auth } }</code> — <code>endpoint</code> is the push-service URL (≤ 2048 chars); <code>p256dh</code>/<code>auth</code> are the base64url-encoded keys from the browser.</td>
+</tr>
+</tbody></table>
+<pre><code class="language-jsonc">// call
+{
+  &quot;subscription&quot;: {
+    &quot;endpoint&quot;: &quot;https://fcm.googleapis.com/fcm/send/exampleSubscriptionId&quot;,
+    &quot;keys&quot;: { &quot;p256dh&quot;: &quot;BNcRd…&quot;, &quot;auth&quot;: &quot;tBHI…&quot; }
+  }
+}
+
+// response (example)
+{ &quot;ok&quot;: true, &quot;registered&quot;: true, &quot;endpoint&quot;: &quot;https://fcm.googleapis.com/fcm/send/exampleSubscriptionId&quot; }
+</code></pre>
+<h3 id="unregisterpushdevice"><a class="anchor" href="#unregisterpushdevice" aria-label="Link to this section">#</a><code>unregister_push_device</code></h3>
+<p>Remove a Web Push device so it stops receiving pushes. Wraps <code>DELETE /api/push/subscribe</code>. Provide <strong>at least one</strong> of the two arguments — the endpoint is what locates the device. Idempotent: removing an endpoint that isn&#39;t registered still returns <code>ok</code>. Only push delivery to that device changes; <code>in_app</code>, <code>email</code>, and <code>telegram</code> preferences are untouched.</p>
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>endpoint</code></td>
+<td><code>string</code> (URL)</td>
+<td>one of</td>
+<td>The push endpoint URL of the device to remove (preferred).</td>
+</tr>
+<tr>
+<td><code>subscription</code></td>
+<td><code>object</code></td>
+<td>one of</td>
+<td>Alternatively the full subscription object; its <code>endpoint</code> is used.</td>
+</tr>
+</tbody></table>
+<pre><code class="language-jsonc">// call
+{ &quot;endpoint&quot;: &quot;https://fcm.googleapis.com/fcm/send/exampleSubscriptionId&quot; }
+
+// response (example)
+{ &quot;ok&quot;: true, &quot;unregistered&quot;: true, &quot;endpoint&quot;: &quot;https://fcm.googleapis.com/fcm/send/exampleSubscriptionId&quot; }
+</code></pre>
+<h2 id="authentication"><a class="anchor" href="#authentication" aria-label="Link to this section">#</a>Authentication</h2>
+<p>Every endpoint is account-scoped and returns <code>401</code> without a valid credential — this server can never read or change another account.</p>
+<p>Set <code>THREE_WS_API_KEY</code> to either:</p>
+<ul>
+<li>a <strong>three.ws API key</strong> (<code>sk_live_…</code> / <code>sk_test_…</code>) — create one in your <a href="https://three.ws/dashboard">three.ws dashboard</a>, or</li>
+<li>an <strong>OAuth access token</strong> for the account.</li>
+</ul>
+<p>Both are carried as <code>Authorization: Bearer …</code> on every request. Bearer auth is CSRF-exempt server-side, so writes need no extra token. <code>THREE_WS_TOKEN</code> and <code>THREE_WS_BEARER</code> are accepted aliases. Treat the credential like a password — it grants full read/write over the account&#39;s inbox and delivery settings.</p>
+<h2 id="configuration"><a class="anchor" href="#configuration" aria-label="Link to this section">#</a>Configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Env var</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>THREE_WS_API_KEY</code></td>
+<td><strong>yes</strong></td>
+<td>—</td>
+<td>three.ws API key or OAuth access token (see <a href="#authentication">Authentication</a>). Aliases: <code>THREE_WS_TOKEN</code>, <code>THREE_WS_BEARER</code>.</td>
+</tr>
+<tr>
+<td><code>THREE_WS_BASE</code></td>
+<td>no</td>
+<td><code>https://three.ws</code></td>
+<td>API base URL. Override only when self-hosting or targeting a preview.</td>
+</tr>
+<tr>
+<td><code>THREE_WS_TIMEOUT_MS</code></td>
+<td>no</td>
+<td><code>20000</code></td>
+<td>Per-request timeout in milliseconds. Must be a positive number.</td>
+</tr>
+</tbody></table>
+<p>The credential is checked when a tool runs, not at startup — the server boots and advertises its tool surface without one, so <code>tools/list</code> always works.</p>
+<h2 id="errors"><a class="anchor" href="#errors" aria-label="Link to this section">#</a>Errors</h2>
+<p>A failed tool call returns an MCP error result (<code>isError: true</code>) whose text is a single JSON object:</p>
+<pre><code class="language-jsonc">// error shape (example)
+{ &quot;ok&quot;: false, &quot;error&quot;: &quot;upstream_error&quot;, &quot;message&quot;: &quot;Not found&quot;, &quot;status&quot;: 404, &quot;detail&quot;: { /* API body */ } }
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><code>error</code></th>
+<th>HTTP</th>
+<th>Meaning</th>
+<th>Recovery</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>missing_credential</code></td>
+<td>401</td>
+<td>No <code>THREE_WS_API_KEY</code> (or alias) configured.</td>
+<td>Set the env var and restart the client.</td>
+</tr>
+<tr>
+<td><code>validation_error</code></td>
+<td>400</td>
+<td>Bad arguments (e.g. neither <code>id</code> nor <code>all</code> on <code>mark_read</code>).</td>
+<td>Fix the call — the message says exactly what&#39;s missing.</td>
+</tr>
+<tr>
+<td><code>upstream_error</code></td>
+<td>as returned</td>
+<td>The three.ws API rejected the request; <code>status</code> + <code>detail</code> carry the real response (401 bad key, 404 unknown id, 429 rate-limited).</td>
+<td>Act on <code>status</code> — a 429 is safe to retry after a pause.</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>—</td>
+<td>No response within <code>THREE_WS_TIMEOUT_MS</code>.</td>
+<td>Retry; raise the timeout if it recurs.</td>
+</tr>
+<tr>
+<td><code>network_error</code></td>
+<td>—</td>
+<td>The request never reached the API (DNS, offline).</td>
+<td>Check connectivity / <code>THREE_WS_BASE</code>.</td>
+</tr>
+</tbody></table>
+<p>Reads are always safe to retry. The writes are idempotent by design (<code>mark_read</code>, <code>set_preferences</code>, <code>register_push_device</code>, <code>unregister_push_device</code> re-run to the same state) — only <code>delete_notification</code> is not, and a repeat simply returns not-found.</p>
+<h2 id="related"><a class="anchor" href="#related" aria-label="Link to this section">#</a>Related</h2>
+<ul>
+<li><a href="https://www.npmjs.com/package/@three-ws/brain-mcp"><code>@three-ws/brain-mcp</code></a> — the three.ws multi-provider LLM router over MCP.</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/pumpfun-mcp"><code>@three-ws/pumpfun-mcp</code></a> — free, read-only pump.fun + Solana data (the source of many <code>pump_alert</code> events).</li>
+<li><a href="https://www.npmjs.com/package/@three-ws/irl"><code>@three-ws/irl</code></a> — the real-world presence layer whose interactions land in the <code>irl</code> category.</li>
+</ul>
+<h2 id="links"><a class="anchor" href="#links" aria-label="Link to this section">#</a>Links</h2>
+<ul>
+<li>Homepage: <a href="https://three.ws">https://three.ws</a></li>
+<li>Changelog: <a href="https://three.ws/changelog">https://three.ws/changelog</a></li>
+<li>Issues: <a href="https://github.com/nirholas/three.ws/issues">https://github.com/nirholas/three.ws/issues</a></li>
+<li>License: Apache-2.0. See <a href="https://github.com/nirholas/push-notifications-mcp/blob/main/LICENSE">LICENSE</a>.</li>
+</ul>
+<hr>
+<p align="center">
+  <sub>
+    Part of the <a href="https://three.ws">three.ws</a> SDK suite — 3D AI agents, on-chain identity, and agent payments.<br/>
+    <a href="https://three.ws">Website</a> · <a href="https://three.ws/changelog">Changelog</a> · <a href="https://github.com/nirholas/three.ws">GitHub</a>
+  </sub>
+</p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#why">Why</a></li><li><a href="#install">Install</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#tools">Tools</a></li><li><a href="#authentication">Authentication</a></li><li><a href="#configuration">Configuration</a></li><li><a href="#errors">Errors</a></li><li><a href="#related">Related</a></li><li><a href="#links">Links</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/push-notifications-mcp/issues">Issues</a><a href="https://github.com/nirholas/push-notifications-mcp/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/push-notifications-mcp/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>
